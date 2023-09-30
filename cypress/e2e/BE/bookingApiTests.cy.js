@@ -17,7 +17,7 @@ before(() => {
     },
   }).then((response) => {
     // Ensure the request is successful
-    expect(response.status).to.equal(200);
+    expect(response.status).to.eq(200);
     token = response.body.token;
 
     // Verify that the token is not empty
@@ -92,7 +92,7 @@ describe("RESTful Booker API Tests", () => {
       },
     }).then((response) => {
       // Ensure the booking update is successful
-      expect(response.status).to.equal(200);
+      expect(response.status).to.eq(200);
       expect(response.body).to.have.property("firstname", updFirstName);
       expect(response.body).to.have.property("lastname", updLastName);
       expect(response.body).to.have.property("totalprice", updprice);
@@ -114,7 +114,7 @@ describe("RESTful Booker API Tests", () => {
       },
     }).then((response) => {
       // Ensure the partial update is successful
-      expect(response.status).to.equal(200);
+      expect(response.status).to.eq(200);
     });
   });
 
@@ -128,7 +128,7 @@ describe("RESTful Booker API Tests", () => {
       },
       body: {},
     }).then((response) => {
-      expect(response.status).to.equal(201);
+      expect(response.status).to.eq(201);
     });
   });
 });

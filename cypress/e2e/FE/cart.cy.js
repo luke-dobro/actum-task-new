@@ -24,13 +24,13 @@ describe("Cart tests", () => {
     cy.get(".hrefch").first().click();
 
     cy.get(".name")
-      .invoke("text") // Get the text of the element
+      .invoke("text")
       .then((text) => {
-        productName = text; // Save the text in a variable
+        productName = text;
       });
 
     cy.get(".price-container")
-      .invoke("text") // Get the text of the element
+      .invoke("text")
       .then((text) => {
         productPrice = text.match(/\d+/)[0]; // Save number only in a variable
       });
@@ -52,7 +52,7 @@ describe("Cart tests", () => {
         .invoke("text")
         .then((actualTitle) => {
           // Compare the actual title with the expected title
-          expect(actualTitle.trim()).to.equal(productName);
+          expect(actualTitle.trim()).to.eq(productName);
         });
     });
 
@@ -62,7 +62,7 @@ describe("Cart tests", () => {
       .invoke("text")
       .then((actualPrice) => {
         // Compare the actual price with the expected price
-        expect(actualPrice.trim()).to.equal(productPrice);
+        expect(actualPrice.trim()).to.eq(productPrice);
       });
 
     // Cart total corresponds to the product price
@@ -70,7 +70,7 @@ describe("Cart tests", () => {
       .invoke("text")
       .then((text) => {
         // Use the 'text' variable containing the element's text content
-        expect(text).to.equal(productPrice);
+        expect(text).to.eq(productPrice);
       });
   });
 
@@ -114,11 +114,11 @@ describe("Cart tests", () => {
         productPrice2 = actualPrice.trim();
       });
 
-    // Cart total corresponds to the product price
+    // Cart total corresponds to the sum of product prices
     cy.get("#totalp")
       .invoke("text")
       .then((text) => {
-        expect(Number(text)).to.equal(
+        expect(Number(text)).to.eq(
           Number(productPrice) + Number(productPrice2)
         );
       });
@@ -180,7 +180,7 @@ describe("Cart tests", () => {
         productPrice = actualPrice.trim();
       });
 
-    // Read the text of the second price
+    // Read the text of the second procut's price
     cy.get("td")
       .wait(1000)
       .eq(6)
@@ -189,6 +189,7 @@ describe("Cart tests", () => {
         productPrice2 = actualPrice.trim();
       });
 
+    // Removal of one product from cart
     cy.contains("a", "Delete").click();
 
     cy.wait(3000);
@@ -197,12 +198,10 @@ describe("Cart tests", () => {
     cy.get("#totalp")
       .invoke("text")
       .then((text) => {
-        expect(Number(text)).to.equal(Number(productPrice2));
+        expect(Number(text)).to.eq(Number(productPrice2));
       });
 
     cy.get("a").contains("Delete").click();
-
-    cy.wait(3000);
 
     // Table with products is not visible anymore
     cy.get(".success", { timeout: 5000 }).should("not.exist");
